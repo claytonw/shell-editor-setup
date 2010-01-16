@@ -1,0 +1,56 @@
+;;Bits and pieces cobbled from around.  Just putting it somewhere for backup
+
+;;to set foreground color to white
+(set-foreground-color "OliveDrab4")
+
+;;to set background color to black
+(set-background-color "black")
+
+
+(setq inhibit-startup-message t)
+
+(tool-bar-mode -1)
+
+(menu-bar-mode -1)
+
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+(setq-default c-basic-offset 4)
+(add-to-list 'auto-mode-alist '("\\.js\\'" . javascript-mode))
+(autoload 'javascript-mode "javascript" nil t)
+
+
+(add-to-list 'load-path "~/.emacs.d/site-lisp")
+
+(require 'auto-complete)
+(global-auto-complete-mode t)
+
+(setq ac-auto-start nil)
+(global-set-key "\M-/" 'ac-start)
+
+;;(define-key ac-complete-mode-map "\t" 'ac-complete)
+;;(define-key ac-complete-mode-map "\r" nil)
+
+
+
+;;(define-key ac-complete-mode-map "\C-n" 'ac-next)
+;;(define-key ac-complete-mode-map "\C-p" 'ac-previous)
+
+(require 'flymake-ruby)
+(add-hook 'ruby-mode-hook 'flymake-ruby-load)
+
+(require 'mmm-mode)
+
+(mmm-add-classes
+ '((erb-code
+    :submode ruby-mode
+    :match-face (("" 
+    :insert ((?% erb-code       nil @ "" @)
+             (?# erb-comment    nil @ "" @)
+             (?= erb-expression nil @ "" @))
+    )))
+))
+
+(add-to-list 'auto-mode-alist '("\\.erb$" . html-mode))
+(add-to-list 'mmm-mode-ext-classes-alist '(html-mode nil erb-code))
+
