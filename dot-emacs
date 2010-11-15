@@ -1,11 +1,12 @@
 ;;Bits and pieces cobbled from around.  Just putting it somewhere for backup
 
 ;;to set foreground color to white
-(set-foreground-color "OliveDrab4")
+(set-foreground-color "OliveDrab3")
 
 ;;to set background color to black
 (set-background-color "black")
 
+(set-face-attribute 'default nil :height 120)
 
 (setq inhibit-startup-message t)
 
@@ -53,4 +54,36 @@
 
 (add-to-list 'auto-mode-alist '("\\.erb$" . html-mode))
 (add-to-list 'mmm-mode-ext-classes-alist '(html-mode nil erb-code))
+(add-to-list 'load-path "/Users/cawillms/build/git-emacs/")
 
+(require 'git-emacs)
+(setq-default ispell-program-name "aspell")
+
+(defun create-tags (dir-name)
+     "Create tags file."
+     (interactive "DDirectory: ")
+     (eshell-command 
+      (format "find %s -type f -name \"*.[ch]\" | etags -i -" dir-name)))
+
+(defun copy-from-osx ()
+  (shell-command-to-string "pbpaste"))
+
+(defun paste-to-osx (text &optional push)
+  (let ((process-connection-type nil)) 
+      (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+        (process-send-string proc text)
+        (process-send-eof proc))))
+
+(setq interprogram-cut-function 'paste-to-osx)
+(setq interprogram-paste-function 'copy-from-osx)
+
+(require 'haml-mode)
+(require 'sass-mode)
+(require 'inf-ruby)
+(require 'flymake-jslint)
+(require 'highlight-parentheses)
+(require 'magit)
+(require 'nginx-mode)
+(setq mac-command-modifier 'meta)
+
+(set-default-font "DejaVu Sans Mono-12:bold")
