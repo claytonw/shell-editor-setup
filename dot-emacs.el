@@ -15,16 +15,14 @@
 (menu-bar-mode -1)
 
 (setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
-(setq-default c-basic-offset 4)
+(setq-default tab-width 2)
+(setq-default c-basic-offset 2)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . javascript-mode))
 (autoload 'javascript-mode "javascript" nil t)
 
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 
-(require 'auto-complete)
-(global-auto-complete-mode t)
 
 (setq ac-auto-start nil)
 (global-set-key "\M-/" 'ac-start)
@@ -37,26 +35,9 @@
 ;;(define-key ac-complete-mode-map "\C-n" 'ac-next)
 ;;(define-key ac-complete-mode-map "\C-p" 'ac-previous)
 
-(require 'flymake-ruby)
-(add-hook 'ruby-mode-hook 'flymake-ruby-load)
-
-(require 'mmm-mode)
-
-(mmm-add-classes
- '((erb-code
-    :submode ruby-mode
-    :match-face (("" 
-    :insert ((?% erb-code       nil @ "" @)
-             (?# erb-comment    nil @ "" @)
-             (?= erb-expression nil @ "" @))
-    )))
-))
 
 (add-to-list 'auto-mode-alist '("\\.erb$" . html-mode))
-(add-to-list 'mmm-mode-ext-classes-alist '(html-mode nil erb-code))
-(add-to-list 'load-path "/Users/cawillms/build/git-emacs/")
 
-(require 'git-emacs)
 (setq-default ispell-program-name "aspell")
 
 (defun create-tags (dir-name)
@@ -77,13 +58,24 @@
 (setq interprogram-cut-function 'paste-to-osx)
 (setq interprogram-paste-function 'copy-from-osx)
 
-(require 'haml-mode)
-(require 'sass-mode)
-(require 'inf-ruby)
-(require 'flymake-jslint)
-(require 'highlight-parentheses)
-(require 'magit)
-(require 'nginx-mode)
 (setq mac-command-modifier 'meta)
 
-(set-default-font "DejaVu Sans Mono-12:bold")
+;;(set-default-font "Source Code Pro")
+
+(setq load-path (cons "/usr/local/go/misc/emacs" load-path))
+(require 'go-mode-load)
+
+(require 'flymake)
+ 
+(defvar go-compiler "go")
+
+(eval-after-load "go-mode"
+  '(require 'flymake-go))
+
+;; (add-to-list 'load-path "~/.emacs.d/site-lisp/goflymake")
+;; (require 'go-flymake)
+
+(setq c-basic-indent 2)
+(setq tab-width 2)
+(setq indent-tabs-mode nil)
+(setq js-indent-level 2)
